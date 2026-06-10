@@ -1,0 +1,6 @@
+window,route,cohort,requests,errors,slow
+w01,browse,baseline,95000,95,950
+w01,browse,candidate,95000,95,950
+w01,checkout,baseline,1000,2,15
+w01,checkout,candidate,200,0,2
+w02,checkout,baseline,1000,2,15
