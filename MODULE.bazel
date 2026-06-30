@@ -1,0 +1,6 @@
+module(name = "canaryledger", version = "1.0.0")
+bazel_dep(name = "rules_cc", version = "0.2.8")
+bazel_dep(name = "platforms", version = "0.0.11")
+
+cc_configure = use_extension("@rules_cc//cc:extensions.bzl", "cc_configure_extension")
+use_repo(cc_configure, "local_config_cc")
