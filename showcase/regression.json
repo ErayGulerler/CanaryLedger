@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "decision": "ROLLBACK",
+  "policy": {
+    "minimum_requests": 500,
+    "error_limit_bps": 100,
+    "slow_limit_bps": 500,
+    "error_increase_bps": 50,
+    "slow_increase_bps": 200
+  },
+  "routes": [
+    {
+      "route": "browse",
+      "decision": "PROMOTE",
+      "baseline": {
+        "requests": 95000,
+        "errors": 95,
+        "slow": 950,
+        "error_bps": 10,
+        "slow_bps": 100
+      },
+      "candidate": {
+        "requests": 95000,
+        "errors": 95,
+        "slow": 950,
+        "error_bps": 10,
+        "slow_bps": 100
+      },
+      "reasons": []
+    },
+    {
+      "route": "checkout",
+      "decision": "ROLLBACK",
+      "baseline": {
+        "requests": 2000,
+        "errors": 4,
+        "slow": 30,
+        "error_bps": 20,
+        "slow_bps": 150
+      },
+      "candidate": {
+        "requests": 2000,
+        "errors": 30,
+        "slow": 160,
+        "error_bps": 150,
+        "slow_bps": 800
+      },
+      "reasons": [
+        "candidate_error_limit",
+        "candidate_slow_limit",
+        "error_regression",
+        "latency_regression"
+      ]
+    }
+  ]
+}

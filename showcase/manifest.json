@@ -1,0 +1,29 @@
+{
+  "policy_sha256": "16479e61e161e61881a74f7de19e298ea7f3214e957ffcc3a61d00dee3940af7",
+  "binary_sha256": [
+    "05ea23782560a4ef81f52df824f1e1cd0ca3bec4303c97545c83809a5bce06aa",
+    "0c77d8618edbccf82f916f04db954eb5ff99d0928c8366ba54e47d27ba9d8c5a"
+  ],
+  "cases": {
+    "healthy": {
+      "input_sha256": "48e993e07becb5ffe7ba298ebb1fe52ccfc2ec9ac568b45f09c15df12a51b729",
+      "exit_code": 0,
+      "stdout_sha256": "feb6f326b27eba69db91978a7dec452f3f4d10908d5bbe0fb98a2ae6bf27da29"
+    },
+    "incomplete": {
+      "input_sha256": "3b48f95bd3973e1e761745151a7ae4a24945b7d07d65a942aa6241aa6fcf77c3",
+      "exit_code": 10,
+      "stdout_sha256": "9d274393aab192fff205314177c445e9ee67fb59bbe967f1dcf000aef756b07c"
+    },
+    "regression": {
+      "input_sha256": "cc24f765effdf4def2f491a9c43315b553aaeb7ce8daba72478b53421b8f713a",
+      "exit_code": 20,
+      "stdout_sha256": "d44900d2fe89765c610470632a54dec3db3537d231f7575ff82cc75f25a29208"
+    },
+    "invalid": {
+      "input_sha256": "9b5a7daf6dc1343135a4c368e6acde06fb0692862ddb1d1076fc2da6da29a229",
+      "exit_code": 2,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}
