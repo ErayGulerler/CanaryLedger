@@ -1,0 +1,25 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Release review | CanaryLedger</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f2f3ee;color:#192b29;font:16px/1.5 system-ui,sans-serif}
+main{max-width:1050px;margin:auto;padding:40px 24px 64px}header{border-bottom:3px solid #193833}
+.brand{font-weight:720;letter-spacing:.02em}.eyebrow,th,summary{font:700 .73rem/1.5 ui-monospace,monospace;letter-spacing:.065em;text-transform:uppercase}
+h1{font-size:clamp(36px,6vw,64px);line-height:1.05;letter-spacing:-.055em;margin:28px 0 10px}header p{max-width:690px;margin-bottom:26px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+.card,section{background:#fff;border:1px solid #cdd6cf;padding:20px}.card strong{display:block;font-size:30px;letter-spacing:-.045em}
+section{margin:16px 0}h2{font-size:24px;letter-spacing:-.035em;margin:4px 0}.status{display:inline-block;padding:3px 9px;font:700 .76rem/1.5 ui-monospace,monospace;border-radius:3px}
+.ROLLBACK{color:#7f231b;background:#ffe7dc}.HOLD{color:#664200;background:#ffedb5}.PROMOTE{color:#0e4b38;background:#dcf1de}
+table{width:100%;border-collapse:collapse;font-size:.9rem;margin:15px 0}td,th{text-align:left;padding:8px 6px;border-bottom:1px solid #dce2da}th{color:#42534e}
+.scroll{overflow-x:auto}summary{cursor:pointer}footer{font-size:.88rem;color:#4b5d57}code{font-family:ui-monospace,monospace}
+@media(max-width:620px){main{padding:24px 12px}.cards{grid-template-columns:1fr}.card{padding:12px}section{padding:14px}}
+</style></head><body><main><header><div class="brand">CanaryLedger</div>
+<h1>Checkout release review</h1><p>Synthetic canary replay. The busiest route stayed healthy while checkout crossed both the error and latency limits. The gate evaluated each route before issuing its rollout decision.</p></header>
+<div class="cards"><div class="card"><span class="eyebrow">Site-wide errors</span>
+<strong>0.13%</strong>125 of 97,000 candidate requests</div>
+<div class="card"><span class="eyebrow">Checkout errors</span><strong>1.50%</strong>
+30 of 2,000 candidate requests</div><div class="card"><span class="eyebrow">Checkout slow requests</span>
+<strong>8.00%</strong>160 requests exceeded 250 ms</div></div>
+<section><div class='eyebrow'>regression.csv</div><h2>Checkout regression</h2><span class="status ROLLBACK">ROLLBACK</span><div class='scroll'><table><thead><tr><th>Route</th><th>Candidate requests</th><th>Error rate¹</th><th>Slow rate¹</th><th>Decision</th></tr></thead><tbody><tr><td>browse</td><td>95,000</td><td>0.10% → 0.10%</td><td>1.00% → 1.00%</td><td><span class="status PROMOTE">PROMOTE</span></td></tr><tr><td>checkout</td><td>2,000</td><td>0.20% → 1.50%</td><td>1.50% → 8.00%</td><td><span class="status ROLLBACK">ROLLBACK</span></td></tr></tbody></table></div><details open><summary>Decision reasons</summary><ul><li><strong>checkout</strong> · candidate error limit, candidate slow limit, error regression, latency regression</li></ul></details></section><section><div class='eyebrow'>incomplete.csv</div><h2>Partial observation window</h2><span class="status HOLD">HOLD</span><div class='scroll'><table><thead><tr><th>Route</th><th>Candidate requests</th><th>Error rate¹</th><th>Slow rate¹</th><th>Decision</th></tr></thead><tbody><tr><td>browse</td><td>95,000</td><td>0.10% → 0.10%</td><td>1.00% → 1.00%</td><td><span class="status PROMOTE">PROMOTE</span></td></tr><tr><td>checkout</td><td>200</td><td>0.20% → 0.00%</td><td>1.50% → 1.00%</td><td><span class="status HOLD">HOLD</span></td></tr></tbody></table></div><details open><summary>Decision reasons</summary><ul><li><strong>checkout</strong> · unpaired windows, low candidate volume</li></ul></details></section><section><div class='eyebrow'>healthy.csv</div><h2>Healthy rollout</h2><span class="status PROMOTE">PROMOTE</span><div class='scroll'><table><thead><tr><th>Route</th><th>Candidate requests</th><th>Error rate¹</th><th>Slow rate¹</th><th>Decision</th></tr></thead><tbody><tr><td>browse</td><td>95,000</td><td>0.10% → 0.10%</td><td>1.00% → 1.00%</td><td><span class="status PROMOTE">PROMOTE</span></td></tr><tr><td>checkout</td><td>2,000</td><td>0.20% → 0.30%</td><td>1.50% → 2.00%</td><td><span class="status PROMOTE">PROMOTE</span></td></tr></tbody></table></div><details open><summary>Decision reasons</summary><p>Every observed route met policy.</p></details></section><footer>¹ Baseline → candidate. A slow request took more than 250 ms.
+The policy requires 500 requests per cohort. Absolute limits are 1.00% errors
+and 5.00% slow requests. Allowed increases are 50 and
+200 basis points respectively. All rates use request-weighted counts.</footer></main></body></html>
